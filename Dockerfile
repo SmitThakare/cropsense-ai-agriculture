@@ -2,7 +2,8 @@
 FROM python:3.10-slim
 
 # Install system dependencies for scientific packages
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
     build-essential \
     gcc \
     g++ \
@@ -12,8 +13,10 @@ RUN apt-get update && apt-get install -y \
     liblapack-dev \
     libatlas-base-dev \
     libjpeg-dev \
-    zlib1g-dev \
-    && rm -rf /var/lib/apt/lists/*
+    zlib1g-dev && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
 
 # Set working directory
 WORKDIR /app
