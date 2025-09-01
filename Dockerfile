@@ -1,7 +1,7 @@
-# Use Python 3.10 base image
+# Use Python 3.10 base image with build tools
 FROM python:3.10-slim
 
-# Install build tools and system dependencies
+# Install system dependencies for scientific packages
 RUN apt-get update && apt-get install -y \
     build-essential \
     gcc \
@@ -10,6 +10,9 @@ RUN apt-get update && apt-get install -y \
     libssl-dev \
     libblas-dev \
     liblapack-dev \
+    libatlas-base-dev \
+    libjpeg-dev \
+    zlib1g-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
@@ -18,8 +21,8 @@ WORKDIR /app
 # Copy project files
 COPY . .
 
-# Install Python dependencies
-RUN pip install --upgrade pip
+# Upgrade pip and install dependencies
+RUN pip install --upgrade pip setuptools wheel
 RUN pip install -r requirements.txt
 
 # Expose port
