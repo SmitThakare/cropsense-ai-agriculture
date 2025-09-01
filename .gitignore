@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+*.env
+cropify_env/
+cropsense_fresh/

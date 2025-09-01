@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+<div class="container py-2 mx-auto text-center" style="margin-top: 9rem;">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card card-body" style="background-color: blanchedalmond; border-radius: 12px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+        <h2 style="color: #2c3e50; font-weight: bold;">
+          Sorry, we couldn't process your request at the moment. <br> Please try again.
+        </h2>
+        <a href="{{ url_for('home') }}">
+          <button type="submit" class="btn btn-warning mt-4" style="font-weight: bold; font-size: 18px; border-radius: 10px;">
+            🔄 Try Again
+          </button>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
