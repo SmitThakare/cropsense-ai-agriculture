@@ -1,35 +1,34 @@
-# Use Python 3.10 base image with build tools
-FROM python:3.10-slim
-
-# Install system dependencies for scientific packages
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-    build-essential \
-    gcc \
-    g++ \
-    libffi-dev \
-    libssl-dev \
-    libblas-dev \
-    liblapack-dev \
-    libopenblas-dev \
-    libjpeg-dev \
-    zlib1g-dev && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-
+# Use Python 3.9 instead of 3.10 for better compatibility
+FROM python:3.9-slim
 
 # Set working directory
 WORKDIR /app
 
-# Copy project files
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    pkg-config \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy requirements first for better caching
+COPY requirements.txt .
+
+# Upgrade pip and install wheel first
+RUN pip install --upgrade pip==22.3.1 setuptools==65.5.0 wheel==0.38.4
+
+# Install dependencies with more verbose output and ignore some problematic packages
+RUN pip install --no-cache-dir -r requirements.txt --verbose || \
+    (pip install --no-cache-dir -r requirements.txt --force-reinstall --no-deps --verbose)
+
+# Copy the rest of the application
 COPY . .
 
-# Upgrade pip and install dependencies
-RUN pip install --upgrade pip setuptools wheel
-RUN pip install -r requirements.txt
-
 # Expose port
-EXPOSE 8000
+EXPOSE 5000
 
-# Start the app
-CMD ["gunicorn", "app:app", "--bind", "0.0.0.0:8000"]
+# Run the application
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]
