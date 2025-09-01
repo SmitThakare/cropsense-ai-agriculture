@@ -14,6 +14,10 @@ joblib==1.3.2
 # XGBoost
 xgboost==1.7.6
 
+# PyTorch (CPU version - required for your disease prediction model)
+torch==2.0.1
+torchvision==0.15.2
+
 # Image processing
 Pillow==10.0.0
 
