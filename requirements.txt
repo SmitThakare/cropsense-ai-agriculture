@@ -38,9 +38,6 @@ lab==6.2
 lazy-object-proxy==1.4.3
 MarkupSafe==1.1.1
 matplotlib>=3.5.0
-setuptools>=68.0.0
-wheel
-pip>=25.2
 mccabe==0.6.1
 mistune==0.8.4
 nbclient==0.5.1
