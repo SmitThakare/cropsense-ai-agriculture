@@ -69,11 +69,11 @@ disease_model.eval()
 # Loading crop recommendation model
 
 crop_recommendation_model_path = 'models/RandomForest.pkl'
-try:
-    crop_recommendation_model = pickle.load(open("models/RandomForest.pkl", "rb"))
-except:
-    print("Warning: Could not load crop model, using dummy model")
-    crop_recommendation_model = None
+crop_recommendation_model = pickle.load(
+    open(crop_recommendation_model_path, 'rb'))
+
+
+# =========================================================================================
 
 # Custom functions for calculations
 
@@ -134,7 +134,7 @@ app = Flask(__name__)
 
 @ app.route('/')
 def home():
-    title = 'CROPSENSE - Home'
+    title = 'Cropify - Home'
     return render_template('index.html', title=title)
 
 # render crop recommendation form page
@@ -142,7 +142,7 @@ def home():
 
 @ app.route('/crop-recommend')
 def crop_recommend():
-    title = 'CROPSENSE - Crop Recommendation'
+    title = 'Cropify - Crop Recommendation'
     return render_template('crop.html', title=title)
 
 # render fertilizer recommendation form page
@@ -150,7 +150,7 @@ def crop_recommend():
 
 @ app.route('/fertilizer')
 def fertilizer_recommendation():
-    title = 'CROPSENSE - Fertilizer Suggestion'
+    title = 'Cropify - Fertilizer Suggestion'
 
     return render_template('fertilizer.html', title=title)
 
@@ -168,7 +168,7 @@ def fertilizer_recommendation():
 
 @ app.route('/crop-predict', methods=['POST'])
 def crop_prediction():
-    title = 'CROPSENSE - Crop Recommendation'
+    title = 'Cropify - Crop Recommendation'
 
     if request.method == 'POST':
         N = int(request.form['nitrogen'])
@@ -197,7 +197,7 @@ def crop_prediction():
 
 @ app.route('/fertilizer-predict', methods=['POST'])
 def fert_recommend():
-    title = 'CROPSENSE - Fertilizer Suggestion'
+    title = 'Cropify - Fertilizer Suggestion'
 
     crop_name = str(request.form['cropname'])
     N = int(request.form['nitrogen'])
@@ -241,7 +241,7 @@ def fert_recommend():
 
 @app.route('/disease-predict', methods=['GET', 'POST'])
 def disease_prediction():
-    title = 'CROPSENSE - Disease Detection'
+    title = 'Cropify - Disease Detection'
 
     if request.method == 'POST':
         if 'file' not in request.files:
@@ -263,7 +263,4 @@ def disease_prediction():
 
 # ===============================================================================================
 if __name__ == '__main__':
-    import os
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host='0.0.0.0', port=port)
-
+    app.run(debug=False)
