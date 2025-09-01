@@ -20,9 +20,8 @@ COPY requirements.txt .
 # Upgrade pip and install wheel first
 RUN pip install --upgrade pip==22.3.1 setuptools==65.5.0 wheel==0.38.4
 
-# Install dependencies with more verbose output and ignore some problematic packages
-RUN pip install --no-cache-dir -r requirements.txt --verbose || \
-    (pip install --no-cache-dir -r requirements.txt --force-reinstall --no-deps --verbose)
+# Install dependencies
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the rest of the application
 COPY . .
