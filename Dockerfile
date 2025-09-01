@@ -11,7 +11,7 @@ RUN apt-get update && \
     libssl-dev \
     libblas-dev \
     liblapack-dev \
-    libatlas-base-dev \
+    libopenblas-dev \
     libjpeg-dev \
     zlib1g-dev && \
     apt-get clean && \
